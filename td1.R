@@ -22,9 +22,15 @@ menu[,indices]
 correlation_mat <- cor(menu[,indices])
 
 da <- c("Calories", "Total.Fat","Cholesterol","Sodium","Sugars","Protein")
-m1 <- matrix(1:36, nrow = 6, ncol = 6)
+m1 <- matrix(nrow = 6, ncol = 6)
 dimnames(m1) <- list(da, da)
 m1
 
 #Remplissage de la matrice de corrélation
+for (i in 0:36) {
+  for (j in 0:36) {
+    m1[i][j] <- correlation_mat[i][j]
+  }
+}
+m1
 

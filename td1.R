@@ -1,9 +1,9 @@
-#setwd(dir = "C:/Users/Rudyl/Desktop/ESIEA/Cours_5A/Data_Visualisation/TP")
+#setwd(dir = "C:/Users/Armel/Desktop/Cours ESIEA/Github")
 
 #Import des données au format csv
-# menu <- read.csv("C:/Users/Rudyl/Desktop/ESIEA/Cours_5A/Data_Visualisation/TP/menu.csv")
-# menu <- as.data.frame(menu)
-# summary(menu)
+#menu <- read.csv("C:/Users/Armel/Desktop/Cours ESIEA/Github/menu.csv")
+#menu <- as.data.frame(menu)
+#print(summary(menu))
 
 
 #Intallation du package MVN
@@ -15,8 +15,16 @@
 #cor.test(variables)
 
 #Séparation du Dataframe menu
-#donnes_separees <- c("Calories", "Total.Fat", "Cholesterol", "Sodium", "Sugars", "Protein")
-#indices <- which(colnames(menu) %in% donnes_separees)
-#menu[,indices]
+donnes_separees <- c("Calories", "Total.Fat", "Cholesterol", "Sodium", "Sugars", "Protein")
+indices <- which(colnames(menu) %in% donnes_separees)
+menu[,indices]
 #Affichage de la matrice de corrélation
-#cor(menu[,indices])
+correlation_mat <- cor(menu[,indices])
+
+da <- c("Calories", "Total.Fat","Cholesterol","Sodium","Sugars","Protein")
+m1 <- matrix(1:36, nrow = 6, ncol = 6)
+dimnames(m1) <- list(da, da)
+m1
+
+#Remplissage de la matrice de corrélation
+

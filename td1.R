@@ -44,4 +44,9 @@ plot3d(menu$Calories,
 list <- c("Calories", "Total.Fat", "Cholesterol")
 menu.cr <- scale(menu[, list])
 lims <- c(min(menu.cr),max(menu.cr))
+plot3d(menu.cr, type = "p", xlim = lims, ylim = lims,zlim = lims)
+
+#Représentation en 3D des trois variables avec ellipse
+menu.cr_df <- as.data.frame(menu.cr)
 plot3d(menu.cr, type = "s", xlim = lims, ylim = lims,zlim = lims)
+plot3d(ellipse3d(cor(cbind(menu.cr_df$Calories,menu.cr_df$Total.Fat,menu.cr_df$Cholesterol))),col="grey",add=TRUE)

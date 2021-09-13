@@ -46,7 +46,20 @@ menu.cr <- scale(menu[, list])
 lims <- c(min(menu.cr),max(menu.cr))
 plot3d(menu.cr, type = "p", xlim = lims, ylim = lims,zlim = lims)
 
-#Représentation en 3D des trois variables avec ellipse
+#Représentation en 3D des trois variables avec ellipse avec Calories, Total.Fat et Cholesterol
 menu.cr_df <- as.data.frame(menu.cr)
 plot3d(menu.cr, type = "s", xlim = lims, ylim = lims,zlim = lims)
 plot3d(ellipse3d(cor(cbind(menu.cr_df$Calories,menu.cr_df$Total.Fat,menu.cr_df$Cholesterol))),col="grey",add=TRUE)
+
+#Centrer les données avec scale et les réduire
+list <- c("Sodium", "Sugars", "Protein")
+menu.cr <- scale(menu[, list])
+lims <- c(min(menu.cr),max(menu.cr))
+plot3d(menu.cr, type = "s", xlim = lims, ylim = lims,zlim = lims)
+
+#Représentation de l'ellispe de concentration
+menu.cr_df <- as.data.frame(menu.cr)
+plot3d(menu.cr, type = "s", xlim = lims, ylim = lims,zlim = lims)
+plot3d(ellipse3d(cor(cbind(menu.cr_df$Sodium, menu.cr_df$Sugars,menu.cr_df$Protein))), col="grey",add=TRUE)
+
+#

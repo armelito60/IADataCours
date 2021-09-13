@@ -40,4 +40,8 @@ library(rgl)
 plot3d(menu$Calories,
        + menu$Total.Fat, menu$Cholesterol, type="s")
 
-
+#Centrage et réduction des données 
+list <- c("Calories", "Total.Fat", "Cholesterol")
+menu.cr <- scale(menu[, list])
+lims <- c(min(menu.cr),max(menu.cr))
+plot3d(menu.cr, type = "s", xlim = lims, ylim = lims,zlim = lims)

@@ -62,4 +62,7 @@ menu.cr_df <- as.data.frame(menu.cr)
 plot3d(menu.cr, type = "s", xlim = lims, ylim = lims,zlim = lims)
 plot3d(ellipse3d(cor(cbind(menu.cr_df$Sodium, menu.cr_df$Sugars,menu.cr_df$Protein))), col="grey",add=TRUE)
 
-#
+#ACP
+list <- c("Calories","Total.Fat","Cholesterol")
+acp <- dudi.pca(menu[, list], center=TRUE, scale=TRUE, scannf = FALSE, nf = 3)
+names(acp)

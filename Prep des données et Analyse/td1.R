@@ -66,3 +66,7 @@ plot3d(ellipse3d(cor(cbind(menu.cr_df$Sodium, menu.cr_df$Sugars,menu.cr_df$Prote
 list <- c("Calories","Total.Fat","Cholesterol")
 acp <- dudi.pca(menu[, list], center=TRUE, scale=TRUE, scannf = FALSE, nf = 3)
 names(acp)
+
+var <- function(x) sum((x-mean(x))^2)/length(x)
+scale <- function(x) (x - mean(x))/sqrt(var(x))
+apply(menu.cr, 2, scale)

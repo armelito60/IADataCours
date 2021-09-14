@@ -80,3 +80,12 @@ inertie <- inertia.dudi(acp, col.inertia=TRUE)
 inertie
 round(acp$co,2)
 s.corcircle(acp$co, xax=1, yax=2)
+
+#représentation des individus avec l'acp
+s.label(acp$li, xax = 1, yax = 2)
+
+#représentation labellisé des menus du mcdo avec l'acp
+s.label(acp$li, xax = 1, yax=2, label=as.character(menu$Item), clabel=1.5)
+
+gcol <- c("red1", "red4", "orange")
+s.class(dfxy = acp$li, fac = menu$Category, col = gcol, xax = 1, yax = 2)

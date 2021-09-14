@@ -70,3 +70,13 @@ names(acp)
 var <- function(x) sum((x-mean(x))^2)/length(x)
 scale <- function(x) (x - mean(x))/sqrt(var(x))
 apply(menu.cr, 2, scale)
+
+#extraction inertie totale pour les 3 variables
+pve <- 100*acp$eig/sum(acp$eig)
+cumsum(pve)
+
+#analyse des variables
+inertie <- inertia.dudi(acp, col.inertia=TRUE)
+inertie
+round(acp$co,2)
+s.corcircle(acp$co, xax=1, yax=2)

@@ -1,0 +1,164 @@
+---
+title: "TP_ACM"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### Question 1: installation des packages
+````{r include=FALSE}
+library("ade4")
+library("adegraphics")
+library("vcd")
+library(factoextra)
+library(PCAmixdata)
+library("FactoMineR")
+````
+
+### Question 2: chargement du dataset 
+`````{r}
+pokemon <- read.csv("C:/Users/wgorchane/Desktop/ecole/5A/MATH/ACM/pokemon.csv")
+
+````
+### Question 3: DataFrame 
+`````{r}
+poke <- as.data.frame(pokemon)
+
+````
+
+### Question 4: Castage de la variable Generation 
+
+`````{r include=FALSE}
+poke$Generation<-factor(poke$Generation) 
+````
+
+### Question Sous jeu de donnée
+
+`````{R}
+little_poke<-poke[,c(3,12,13)]
+
+````
+
+### Question 6 
+`````{r}
+summary(poke)
+
+````
+Cette fonction nous permet d'avoir une vue d'ensemble sur les differentes variables avec la valeur max,min,medianne...
+##### On caste toutes les variables en Factor
+
+
+`````{r}
+little_poke$Type.1<-factor(little_poke$Type.1)
+little_poke$Generation<-factor(little_poke$Generation)
+little_poke$Legendary<-factor(little_poke$Legendary)
+
+````
+### Question 7 Application de la MCA
+
+````{r}
+res<-dudi.acm(little_poke,scannf = FALSE)
+````
+
+### Question 8: nombre de valeur propre
+
+`````{R}
+nbr_factor<-length(res$eig)
+nbr_factor
+res$eig #pour afficher les valeur prorpre 
+fviz_screeplot(res)
+````
+Nous avons 23 Valeurs Propre
+
+### Question 9
+`````{R}
+res$cr
+````
+Type.1 a le plus fort rapport de corrélation avec les deux axes
+Genration est corrélé avec le 2ème axe
+Legendary et plutôt correle avec le premier axe 
+
+###10
+
+````{r}
+abs(res$c1)
+````
+Nous avons choisi de nous interressé uniquement au facteur Type.1 car c'est celui qui ets le plus correle avec les 2 axes 
+La variable decrivant le mieux le premier axes est Bug avec une valeur de 0,9 
+### 11
+
+````{r}
+cont_table<-table(little_poke$Type.1,little_poke$Generation,little_poke$Legendary)
+assocstats(cont_table)
+````
+
+Quand Legendary vaut False 
+
+Le ratio de vraisemblance est égal à 170.31, ce qui signifie qu'il existe une probabilité non nulle d'association entre les 2 variables "Generation" et "Type.1".
+Le coefficient de contingence (Pearson) est égal à 0.44, ce qui signifie que les 2 variables sont à tendance indépendantes.
+Le V de Cramer vaut 0,22. Dans un cas general il vaut 1 en cas de complète dépendance 
+
+Quand Legendary vaut True on a pas beaucoup d'information 
+
+
+#Question 12
+
+`````{R}
+list<-c("Attack","Defense","Sp..Atk","Sp..Def","Speed")
+round(cor(poke[, list]),2)
+````
+On observe que les variables sont assez faiblement corrélé entre elles 
+La correlation la plus importantes étant SP..DEf avec SP..Atk ainsi qu'avec Defense pour une valeur de 0,51
+
+#Question 13
+
+J'ai installé la library au prealabe library(PCAmixdata)
+
+# QUestion 14
+
+````{R}
+pcamix <- PCAmix( subset ( poke , select =c (7:11)) ,subset ( poke , select =c (3)))
+````
+
+#15
+
+````{r}
+round ( pcamix$eig )
+````
+La dimension 1 possède 3 valeur propre qui est le nombre max de toutes les dimension 
+#16
+
+````{r}
+(round( pcamix$quanti.cor ))
+````
+
+#17
+
+````{r}
+round ( pcamix$categ.coord )
+````
+
+#18 
+````{R}
+poke$Name <- as.factor(poke$Name)
+pcamix2 <- PCAmix( subset ( poke , select =c (7:11)) ,subset ( poke , select =c (2)))
+````
+
+#19
+
+````{R}
+
+( round ( pcamix2$categ.coord[25,] ))
+
+````
+On observe que Pikachu se projette essentiellement sur les dimensions 4 et 5 qu'il se projette pas sur les dimensions 1,2,3 
+
+#20
+
+````{R}
+famd<-  FAMD(poke[,-1])
+summary(famd)
+````
+
+FAMD est une méthode de composant principal dédiée à l'exploration de données avec des variables continues et catégorielles. Il peut être considéré à peu près comme un mélange entre PCA et MCA. Cette méthode permet d'étudier les similitudes entre individus en tenant compte de variables mixtes et d'étudier les relations entre toutes les variables.
